@@ -385,4 +385,17 @@ class ScreenshotComparator implements EventSubscriberInterface
 
         return $string;
     }
+
+    /**
+     * @param SuiteEvent $event
+     */
+    public function moveBehatHtmlReport(SuiteEvent $event)
+    {
+        if ($this->formatterManager !== null) {
+            $old = $this->htmlFormatter->getParameter('output_path');
+            $new = $this->path . $this->started->format('YmdHis') . '/' . basename($old);
+
+            copy($old, $new);
+        }
+    }
 }
